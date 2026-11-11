@@ -37,6 +37,21 @@ jobs:
         with:
           gradle-version: "8.9"
 
+      - name: Align Java and Kotlin targets
+        run: |
+          cat >> source/AL-AQSA-POS/app/build.gradle.kts <<'EOF'
+
+          android {
+              compileOptions {
+                  sourceCompatibility = JavaVersion.VERSION_17
+                  targetCompatibility = JavaVersion.VERSION_17
+              }
+              kotlinOptions {
+                  jvmTarget = "17"
+              }
+          }
+          EOF
+
       - name: Build APK
         run: gradle -p source/AL-AQSA-POS :app:assembleDebug
 
